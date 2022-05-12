@@ -1,0 +1,144 @@
+\documentclass[10pt,twocolumn]{article} 
+
+% required packages for Oxy Comps style
+\usepackage{oxycomps} % the main oxycomps style file
+\usepackage{times} % use Times as the default font
+\usepackage[style=numeric,sorting=nyt]{biblatex} % format the bibliography nicely
+
+\usepackage{amsfonts} % provides many math symbols/fonts
+\usepackage{listings} % provides the lstlisting environment
+\usepackage{amssymb} % provides many math symbols/fonts
+\usepackage{graphicx} % allows insertion of grpahics
+\usepackage{hyperref} % creates links within the page and to URLs
+\usepackage{url} % formats URLs properly
+\usepackage{verbatim} % provides the comment environment
+\usepackage{xpatch} % used to patch \textcite
+
+\bibliography{references}
+\DeclareNameAlias{default}{last-first}
+
+\xpatchbibmacro{textcite}
+  {\printnames{labelname}}
+  {\printnames{labelname} (\printfield{year})}
+  {}
+  {}
+
+\pdfinfo{
+    /Title (Writing Your Oxy CS Comps Paper in LaTeX)
+    /Author (Justin Li)
+}
+
+\title{Comps Proposal}
+
+\author{Layla Razvi}
+\affiliation{Occidental College}
+\email{lrazvi@oxy.edu}
+
+\begin{document}
+
+\maketitle
+
+
+
+\section{Introduction and Problem Context}
+Every day there is an overwhelming amount of data created in social media apps by their users, but it is not likely for them to remember a topic that was trending from 2 years ago off the top of their heads. There are many cases where people may want to see what people discussed on social media apps such as Twitter a couple years before the present whether it be for research or just personal curiosity, and there is a way to access this Twitter data. The most standard way to get this type of data, specifically from Twitter, is through  Twitter's API. In order to get access to this, you have to create a Twitter developer account, make an application through this account, and then make a request to get API access. This whole process may seem especially complicated for those who are non programmers. \newline
+
+Through Twitter's API, I plan on creating a web app with a user friendly interface for people to search up topics on Twitter and some of the most engaged tweets related to those topics. I plan on designing it in a similar format to how people can search topics on Twitter. The main difference will be that users will be able to input a specified range of dates when looking up their topics. In this paper I will go through the technical background, prior work, methods, evaluation metrics, ethical considerations, and the timeline of my project.
+
+\section{Technical Background}
+An API is an application programming interface that allows multiple applications to interact with and retrieve data from each other. 
+There are public APIs which are released by companies so developers can easily access them and build their own apps and platforms and don't require a submission for approval while private APIs do. Twitter's API is private as it requires the developer to register an application to get access and has other permissions that granted by default. APIs have limits to allow companies and developers to share select information and keep unwanted requests out (\textcite{Help2022Twitter}). \newline
+
+As mentioned in the previous section, the main way to access Twitter data is through Twitter's API and creating a Twitter developer account. There is a Python package, "twitter", that has the Twitter API and mimics the public API semantics that can be installed through a terminal. After installing this package you have to create an application through your Twitter Developer account and then you will be able to make API requests and gain API access while Twitter can monitor and interact with third-party platform developers as needed. \newline
+
+The Twitter API is free and provides various endpoints for completing tasks like retrieving historical tweets, accessing account activities, sending direct messages, etc. It has also an updated version, Twitter API v2, that includes different access levels such as Essential (can retrieve up to 500,000 tweets per month), Elevated (2 million tweets per month), and Academic Research (10 million tweets per month) (\textcite{Migrate2022Twitter}). 
+
+
+\section{Prior Work}
+Some of the prior work I have seen is code from the the online book, "Mining the Social Web" by Matthew A. Russell, that does some mining through Twitter retrieving trending topics, computing the intersection of trends, collecting search results, etc (\textcite{Mining2022Twitter}). These are the kinds of queries I would like to implement with the web app I create. In terms of actual apps, I was not able to find many that utilized Twitter or other social media data in the way that I would like to for my project.\newline
+
+However, I was able to find some general analysis of some of the most popular social media API's giving a brief summary of their tools and capabilities, a testing and review process, and Limitations and Workarounds. The testing the author did for the Twitter API was retrieving an authorized user's tweets which resulted in a "a JSON array with the tweet’s images, favorites, retweets, urls, creation date, and other attributes" (\textcite{Social2017Twitter}). They also examined Instagram's API, where the testing results were quite similar to that of Twitter. Some of the limitations stated for the Twitter API was that there wasn't an easy way to retrieve demographic data and that the rate limits were in a per-user and 15 basis while Instagram had similar issues with demographic data and the rate limits being controlled by access token on a sliding 1-hour window.
+
+
+
+\section{Methods}
+
+
+\subsection{API Access}
+In order to properly implement my project I must get the proper access to Twitter's API, so I will first create a Twitter Developer account specifically for the Twitter API v2, and begin with the Essential access level to see if it is proficient enough for my project. I will then have to have a project set up to associate with my account in the developer portal which will then allow me to generate credentials such as API Key and Secret, User Access Tokens, and App Access Tokens. API Key and Secret are essentially going to be the username and password for my project and are required to generate other tokens. Access tokens basically represent the user we are requesting on behalf of, and the App Access Token is used to make a request to an endpoint. The next step is to actually make the first request to the API which requires a whole new set of steps(\textcite{Getting2022Twitter}).
+
+\subsection{Making Requests}
+To make an API request, I first have to identify which endpoint I would like to use of which I can figure out by using the API Reference site from the Twitter developer site. Once I figure that out, I can choose a specific tool to make my request, some options including cURL, sample code from Github, Postman, and select libraries. Using any of these tools will allow me to make my first request to the Twitter API v2 and will enable me to try out new endpoints and features of the API (\textcite{Getting2022Twitter}). After making requests, I will receive back json files with the data that I need and will then be able to use Pyhton to work on the backend side of my project.
+
+\subsection{Building an App}
+As for the actual application, I will be creating it with React which will be in JavaScript. In order to use react I have to make sure I have the proper setup by checking my installations of Node.js, npm, and npx. I can then create a react app using npx in the terminal and changing my directory to that app. I will have to then replace the script blocks in my package.json file with script blocks provided by the Twitter Developer portal as well as the rest the rest of the files I have to set up 
+(\textcite{Building2022Twitter}).
+
+
+\section{Evaluation Metrics}
+
+Since the content of my app will mainly be Twitter data, the main audience for my app will be Twitter and other social media users. My goal for this project is for my app is to provide them a platform where they can easily navigate Twitter and possibly other social media data in a way that will be useful and convenient for them. In order to evaluate whether or not the app will be useful to these users, I plan on doing a survey and possibly some user interviews. \newline
+
+For the survey, I will likely do it in two parts with the first part being before the users test out my app and the second part being immediately after. The first section of the survey will likely consist of questions regarding their current access to social media data and if they feel limited in that regarding to how far back they can look at certain tweets or posts as well as if they ever feel a need to look more in depth for certain discussions or posts online. \newline
+
+The second part of the survey, being directly after the user tests out my app, will be more geared towards the users opinions on the app itself in response to the first survey. I will provide questions regarding the usefulness of the app, whether it was able to fix some of the issues presented in the first survey, and how often the users would use this app if it was available to them. \newline
+
+For a user interview, I would ask questions more related to the improvement of the app and if there was anything the user would like to see more or less of in the app. I would also ask them questions about the design of the app and how easy it was to navigate through as well as if they were confused or thought anything was unclear. \newline
+
+In terms of the evaluation of my app's performance based off of the users' responses, I have categories of what makes my app successful in reaching my goals including usefulness, convenience, clarity, etc. In these categories I will create scores based off of the answers to the questions in the surveys and interviews. A good score (A) would consist of the users saying the app is useful, easy to navigate, and that addresses of their problems in looking through social media data. An an average/above average score (B or C) would consist of the users responses being that the app is a little hard to navigate or understand (the app not being totally polished or functional). Any score lower would consist of the users' responses saying it's not useful or convenient to use.
+
+\section{Ethical Considerations}
+
+\subsection{Data Bias}
+Before getting into specifics about potential ethical issues with my project, it is important to identify the existing ethical issues with Twitter.
+
+\subsubsection{Algorithms}
+With social media, there is often a clear algorithm that favors what kind of posts gain popularity over others, or a specific algorithm that ends up being curated for people's timelines and "for you" pages. One study has found that political content from elected officials on Twitter is amplified on people's Home pages. Although algorithmic amplification isn't always a bad thing, it becomes an issue when preferential treatment has been constructed into the algorithm in contrast to how much people interact with it.\textcite{Examining2021AlgAmplification}
+
+\subsubsection{Misinformation, Fake Accounts}
+Another issue with social media platforms like Twitter is the easy spread of misinformation and how viral tweets with misinformation are immediately assumed to be the truth. \newline
+
+Most users on social media would not even be considered real people such as "celebrity staff tweeting on behalf of their employer, or PRs promoting a company, or even fake accounts for people that don’t exist at all. In fact, half of all Twitter accounts created in 2013 have already been deleted." \textcite{Forbes2014Twitter}. This creates a small conflict with the original intention of my project, which was to see people's tweets about certain topics during a specific time period, which would not be possible if most of the accounts engaged in that topic don't exist by the time the user is looking it up. \newline
+
+Another issue with this is determining whether viral and trending topics and tweets are the result of these "real" or "fake" accounts. Spam accounts, for example, can come in many different forms including fake news, social bots, random user, etc. With the increase in spam accounts on Twitter, "both genuine and false news spread at equal rate. False news on Twitter spread rapidly. Social bots are deployed to accelerate the process and human users further amplify the content." \textcite{Spam2018Twitter} This also ends up disproportionately affecting the Twitter algorithm and what ends up going viral/trending, showing up on users' home pages, etc.\newline
+
+Since my project relies on these algorithms from Twitter, I must acknowledge the potential bias that will come with the Twitter algorithm as certain topics are searched in the past couple years. Although there is not much that I myself fix or changed these potentially biased algorithms, I can at least inform my users of how the algorithm works.
+
+
+
+
+\subsection{Privacy, Security, Consent}
+Another aspect to take into account in the ethics of accessing and utilizing Twitter data is the privacy and consent of Twitter users. 
+
+\subsubsection{Public Accounts}
+
+In Twitter, people have the option to have their accounts either public or private, where public accounts will be able to be viewed by people that are not following them. In terms of accessing the data with the Twitter API, "Twitter data can only be captured from users with a public account, i.e. where tweets are publicly visible. Furthermore, the Twitter API has data capture restrictions specifying that for each user only the most recent 3200 tweets are retrievable" \textcite{Linking2021Twitter} \newline
+
+Public accounts have consented for their Twitter content to be viewed by basically anybody on Twitter, however it is very common for their content to be spread through many other platforms without their consent. This is an issue since it can create unwarranted attention to certain accounts, or on the other hand their might be an issue with stealing content without credit to those users. In my app I plan to make it very clear that the user is looking at data specifically from Twitter and that the users of each tweet will be displayed. There also won't be as much opportunity to spread the content of the tweets as my project will simply be a platform to view tweets. Ideally, I would like to design it in a way that the user won't be able to easily copy or spread them, but I would also like to create an easy option to cite each tweet if they plan on utilizing information from them.
+
+\subsubsection{Private Accounts}
+
+Private accounts are less of an issue since the Twitter API won't be able to access them, but the effects of their engagement in other tweets should still be visible in public tweets.\newline
+
+A potential issue, however, would be if an originally public account were to go private later on. The actual tweets of that account would not be accessible, but we would still be able to other public tweets engaged in the content of that account (such as quote retweets or replies). Similarly, a common practice in response to accounts with viral tweets is Twitter users screenshot-ting the tweets before the users either go private or delete them and spread those screenshots once the original tweet is not available. These screenshots are commonly spread amongst tweets engaged with the original content that has become unavailable, so despite the original users disabling access to their original tweets, people are still able to access and spread their content without their consent. 
+
+
+\subsection{Potential for Abusive Content}
+
+Other than consent, there is also a major issue regarding abusive content on Twitter as there is on many other social media platforms.  \newline
+
+One of the most common forms of abusive content on Twitter would be in spam accounts that spam other users with links or videos containing inappropriate content. These types of spam counts can be dealt with quickly if they don't have a lot of followers and if enough users report them. The Twitter API limits spam by also enforcing App-level rate limit on some of their post endpoints such as a limit of 300 Tweets or Retweets and liking up to 1,000 Tweets across all of the authorized users of a developer App during a three hour and 24 hour time period.
+
+
+\section{Timeline}
+As there is no definitive amount of time this project may take, especially with the API requests, I must organize when I plan to work accordingly. \newline
+
+This summer I plan on focusing on testing things out and examining the limits to Twitter's API as well as determining if I should incorporate another social media's API if Twitter. Mid May I will start out by creating my Twitter Developer account to getting access to the Twitter API v2 and sending API requests for specific endpoints I would like to utilize. During this time I believe it would be essential to get an idea of the features the potential users of the app would like by possibly creating and sending out a draft of my first survey. After receiving the data from my requests, I will begin testing out code in Python and see what types of queries I can do and whether or not they will be good enough for my app. Around mid June, I would also like to make sure I have all the packages I need to use React and begin building and designing a prototype for the app.  \newline
+
+When the fall semester begins, by 8/25, I will hopefully have a much clearer idea of what my potential users want from my app, the limits and capabilities of the Twitter API, as well as having a prototype for the app. If I don't manage to get all of these done, it will most likely be the app prototype that I haven't worked on, so I would like to get to work on that as soon as possible at the beginning of the semester. In the case that I find out that the Twitter API is too limited, I would also like to get to work on possibly incorporating other social media API's into my project such as Instagram or Facebook. \newline
+
+Towards the beginning of October, I will hopefully have figured out how to fix any complications or limitations I might have with the Twitter (and other social media) API's. I would like to also have begun incorporating the API data into a rough prototype of my app. I would like to have most of the project finished by the beginning of November, and if there are anymore complications I can spend the month figuring those out before I submit everything on 12/15, and if there aren't any complications I can spend the time polishing the app and working on more minor details.
+
+\printbibliography 
+
+\end{document}
